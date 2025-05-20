@@ -103,33 +103,35 @@ Be warm, insightful, and guide interested visitors to share their name and email
 st.set_page_config(page_title="Raabiyah's Career Assistant", layout="centered")
 st.title("🌟 Welcome to Raabiyah’s Site")
 
-tab1, tab2 = st.tabs(["📄 About Me", "🤖 Chat with Me"])
+st.subheader("Talk to Raabiyah’s Assistant")
+if "chatbot" not in st.session_state:
+    st.session_state.chatbot = RaabiyahChatbot()
 
-with tab1:
-    st.subheader("Summary")
-    with open("me/summary.txt", "r", encoding="utf-8") as f:
-        st.write(f.read())
+user_input = st.text_input("Ask a question about Raabiyah...", key="input")
+if user_input:
+    reply = st.session_state.chatbot.respond(user_input)
+    st.write(f"**Raabiyah's Assistant:** {reply}")
 
-    st.subheader("LinkedIn Profile (PDF Extract)")
-    reader = PdfReader("me/linkedin.pdf")
-    linkedin_text = "\n\n".join([p.extract_text() for p in reader.pages if p.extract_text()])
-    st.write(linkedin_text)
+if len(st.session_state.chatbot.history_pairs) > 0:
+    st.write("### Chat History:")
+    for q, a in st.session_state.chatbot.history_pairs:
+        st.write(f"**You:** {q}")
+        st.write(f"**Raabiyah's Assistant:** {a}")
 
-with tab2:
-    st.subheader("Talk to Raabiyah’s Assistant")
-    if "chatbot" not in st.session_state:
-        st.session_state.chatbot = RaabiyahChatbot()
+st.markdown("---")
+st.subheader("📬 Share your email to receive Raabiyah’s CV")
+name = st.text_input("Your name")
+email = st.text_input("Your email")
 
-    user_input = st.text_input("Ask a question about Raabiyah...", key="input")
-    if user_input:
-        reply = st.session_state.chatbot.respond(user_input)
-        st.write(f"**Raabiyah's Assistant:** {reply}")
+if st.button("Send CV"):
+    if name and email:
+        send_email_with_cv(email, st.session_state.chatbot.history_pairs)
+        log_chat_to_file(email, st.session_state.chatbot.history_pairs)
+        log_to_pushover(f"New lead: {name} ({email}) interacted with the assistant.")
+        st.success("Email sent! Raabiyah’s CV and chat summary are on the way.")
+    else:
+        st.error("Please enter both your name and email.")
 
-    if len(st.session_state.chatbot.history_pairs) > 0:
-        st.write("### Chat History:")
-        for q, a in st.session_state.chatbot.history_pairs:
-            st.write(f"**You:** {q}")
-            st.write(f"**Raabiyah's Assistant:** {a}")
 
     st.markdown("---")
     st.subheader("📬 Share your email to receive Raabiyah’s CV")
