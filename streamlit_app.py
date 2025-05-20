@@ -25,11 +25,9 @@ def send_email_with_cv(to_email, chat_history):
     msg["From"] = sender
     msg["To"] = to_email
 
-    # Attach message
     body = "\n\n".join([f"User: {q}\nRaabiyah: {a}" for q, a in chat_history])
     msg.attach(MIMEText(f"Thanks for your interest in Raabiyah!\n\nHere’s a transcript of our chat:\n\n{body}", "plain"))
 
-    # Attach CV
     with open("me/Raabiyah_CV.pdf", "rb") as f:
         part = MIMEApplication(f.read(), Name="Raabiyah_CV.pdf")
         part['Content-Disposition'] = 'attachment; filename="Raabiyah_CV.pdf"'
@@ -62,15 +60,17 @@ class RaabiyahChatbot:
     def __init__(self):
         self.openai = OpenAI()
         self.name = "Raabiyah Adam"
+        self.history_pairs = []
+
         reader = PdfReader("me/linkedin.pdf")
         self.linkedin = ""
         for page in reader.pages:
             text = page.extract_text()
             if text:
-                self.linkedin += text
+                self.linkedin += text.strip() + "\n"
+
         with open("me/summary.txt", "r", encoding="utf-8") as f:
-            self.summary = f.read()
-        self.history_pairs = []
+            self.summary = f.read().strip()
 
     def system_prompt(self):
         return f"""
@@ -102,6 +102,7 @@ Be warm, insightful, and guide interested visitors to share their name and email
 # --- Streamlit App ---
 st.set_page_config(page_title="Raabiyah's Career Assistant", layout="centered")
 st.title("🌟 Welcome to Raabiyah’s Site")
+st.markdown("___")
 
 st.subheader("Talk to Raabiyah’s Assistant")
 if "chatbot" not in st.session_state:
@@ -131,19 +132,3 @@ if st.button("Send CV"):
         st.success("Email sent! Raabiyah’s CV and chat summary are on the way.")
     else:
         st.error("Please enter both your name and email.")
-
-
-    st.markdown("---")
-    st.subheader("📬 Share your email to receive Raabiyah’s CV")
-    name = st.text_input("Your name")
-    email = st.text_input("Your email")
-
-    if st.button("Send CV"):
-        if name and email:
-            send_email_with_cv(email, st.session_state.chatbot.history_pairs)
-            log_chat_to_file(email, st.session_state.chatbot.history_pairs)
-            log_to_pushover(f"New lead: {name} ({email}) interacted with the assistant.")
-            st.success("Email sent! Raabiyah’s CV and chat summary are on the way.")
-        else:
-            st.error("Please enter both your name and email.")
-
