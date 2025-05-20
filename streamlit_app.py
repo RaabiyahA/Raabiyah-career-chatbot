@@ -101,7 +101,7 @@ Be warm, insightful, and guide interested visitors to share their name and email
 
 # --- Streamlit App ---
 st.set_page_config(page_title="Raabiyah's Career Assistant", layout="centered")
-st.title("🌟 Welcome to Raabiyah’s Site")
+st.title("🌟 Chat with Raabiyah’s Assistant")
 st.markdown("___")
 
 st.subheader("Talk to Raabiyah’s Assistant")
