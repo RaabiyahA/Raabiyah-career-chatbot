@@ -86,18 +86,22 @@ Be warm, insightful, and guide interested visitors to share their name and email
 """
 
     def respond(self, user_input):
-        messages = [{"role": "system", "content": self.system_prompt()}]
-        for q, a in self.history_pairs:
-            messages.append({"role": "user", "content": q})
-            messages.append({"role": "assistant", "content": a})
-        messages.append({"role": "user", "content": user_input})
+    messages = [{"role": "system", "content": self.system_prompt()}]
+    for q, a in self.history_pairs:
+        messages.append({"role": "user", "content": q})
+        messages.append({"role": "assistant", "content": a})
+    messages.append({"role": "user", "content": user_input})
 
-        response = self.openai.chat.completions.create(
-            model="gpt-4o-mini", messages=messages
-        )
-        reply = response.choices[0].message.content
-        self.history_pairs.append((user_input, reply))
-        return reply
+    # 🔔 Notify via Pushover
+    log_to_pushover(f"Visitor sent a message: {user_input[:100]}")
+
+    response = self.openai.chat.completions.create(
+        model="gpt-4o-mini", messages=messages
+    )
+    reply = response.choices[0].message.content
+    self.history_pairs.append((user_input, reply))
+    return reply
+
 
 # --- Streamlit App ---
 st.set_page_config(page_title="Raabiyah's Career Assistant", layout="centered")
