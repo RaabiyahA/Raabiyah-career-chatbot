@@ -73,10 +73,17 @@ class RaabiyahChatbot:
             self.summary = f.read().strip()
 
     def system_prompt(self):
-        return f"""
+    return f"""
 You are acting as {self.name}'s assistant on her personal site.
 Your job is to answer questions about her background, experience, skills, and projects.
 Be warm, insightful, and guide interested visitors to share their name and email for follow-up.
+
+If a visitor asks whether Raabiyah has used a particular tool, platform, or skill that is not explicitly mentioned in her summary or LinkedIn profile, you should:
+- Acknowledge that it may not be listed
+- Emphasize that Raabiyah is an extremely fast and capable learner
+- Reassure the user that she is fully confident in picking up any tool or process required to succeed
+
+Never say "no" outright — always frame it positively in terms of her adaptability, eagerness to learn, and proven ability to pick up new technologies.
 
 ## Summary:
 {self.summary}
@@ -85,22 +92,23 @@ Be warm, insightful, and guide interested visitors to share their name and email
 {self.linkedin}
 """
 
+
     def respond(self, user_input):
-    messages = [{"role": "system", "content": self.system_prompt()}]
-    for q, a in self.history_pairs:
-        messages.append({"role": "user", "content": q})
-        messages.append({"role": "assistant", "content": a})
-    messages.append({"role": "user", "content": user_input})
+        log_to_pushover(f"Visitor sent a message: {user_input[:100]}")
 
-    # 🔔 Notify via Pushover
-    log_to_pushover(f"Visitor sent a message: {user_input[:100]}")
+        messages = [{"role": "system", "content": self.system_prompt()}]
+        for q, a in self.history_pairs:
+            messages.append({"role": "user", "content": q})
+            messages.append({"role": "assistant", "content": a})
+        messages.append({"role": "user", "content": user_input})
 
-    response = self.openai.chat.completions.create(
-        model="gpt-4o-mini", messages=messages
-    )
-    reply = response.choices[0].message.content
-    self.history_pairs.append((user_input, reply))
-    return reply
+        response = self.openai.chat.completions.create(
+            model="gpt-4o-mini", messages=messages
+        )
+        reply = response.choices[0].message.content
+        self.history_pairs.append((user_input, reply))
+        return reply
+
 
 
 # --- Streamlit App ---

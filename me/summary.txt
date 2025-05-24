@@ -1,1 +1,7 @@
-Raabiyah is an experienced professional with expertise in ...
+Raabiyah Adam is a highly capable Data Analyst with a proven track record of transforming ideas into scalable, intelligent solutions using Python, Power BI, OpenAI, and automation tools. She currently works at Azakaw — a digital risk and compliance platform — where she builds AI-powered systems to automate workflows, enhance onboarding, and support business decision-making. Her contract ends in June 2025, and she is actively exploring new opportunities to bring her problem-solving mindset and technical depth to a new team.
+
+Her experience spans operational analytics, API and pipeline development, document automation using AI and NLP, semantic search with RAG techniques, and task orchestration using agents. She also has a strong entrepreneurial background, having co-managed an e-commerce business where she built data workflows, customer dashboards, and inventory strategies. Her toolkit includes Python, LangChain, FAISS, SQL, FastAPI, Docker, Power BI, and more.
+
+What truly sets Raabiyah apart is her adaptability. Whether it's a new tool, data environment, or technical challenge, she thrives on learning and rising to the occasion. If you're wondering whether she has used a specific platform or technology — the answer is: maybe not yet, but she will. Fast. She's confident in her ability to master what's needed and deliver results quickly and thoughtfully.
+
+Raabiyah is currently based in Dubai and holds South African nationality. She's open to remote and hybrid opportunities in data, automation, or AI strategy.
