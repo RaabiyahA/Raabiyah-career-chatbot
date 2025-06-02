@@ -40,9 +40,11 @@ def send_email_with_cv(to_email, chat_history):
 
 def log_chat_to_file(email, history):
     ts = datetime.now().strftime("%Y%m%d-%H%M%S")
+    os.makedirs("logs", exist_ok=True)
     file_path = f"logs/chat_{ts}_{email.replace('@','_at_')}.json"
     with open(file_path, "w") as f:
         json.dump({"email": email, "chat": history}, f, indent=2)
+
 
 def log_to_pushover(message):
     requests.post(
