@@ -13,6 +13,7 @@ import requests
 
 load_dotenv()
 
+
 # --- Email & Push Functions ---
 def send_email_with_cv(to_email, chat_history):
     sender = os.getenv("SMTP_SENDER_EMAIL")
@@ -26,11 +27,16 @@ def send_email_with_cv(to_email, chat_history):
     msg["To"] = to_email
 
     body = "\n\n".join([f"User: {q}\nRaabiyah: {a}" for q, a in chat_history])
-    msg.attach(MIMEText(f"Thanks for your interest in Raabiyah!\n\nHere’s a transcript of our chat:\n\n{body}", "plain"))
+    msg.attach(
+        MIMEText(
+            f"Thanks for your interest in Raabiyah!\n\nHere’s a transcript of our chat:\n\n{body}",
+            "plain",
+        )
+    )
 
     with open("me/Raabiyah_CV.pdf", "rb") as f:
         part = MIMEApplication(f.read(), Name="Raabiyah_CV.pdf")
-        part['Content-Disposition'] = 'attachment; filename="Raabiyah_CV.pdf"'
+        part["Content-Disposition"] = 'attachment; filename="Raabiyah_CV.pdf"'
         msg.attach(part)
 
     with smtplib.SMTP(smtp_server, smtp_port) as server:
@@ -38,10 +44,15 @@ def send_email_with_cv(to_email, chat_history):
         server.login(sender, password)
         server.send_message(msg)
 
+
 def log_chat_to_file(email, history):
     ts = datetime.now().strftime("%Y%m%d-%H%M%S")
     os.makedirs("logs", exist_ok=True)
+
     file_path = f"logs/chat_{ts}_{email.replace('@','_at_')}.json"
+
+    file_path = f"logs/chat_{ts}_{email.replace('@', '_at_')}.json"
+
     with open(file_path, "w") as f:
         json.dump({"email": email, "chat": history}, f, indent=2)
 
@@ -56,9 +67,9 @@ def log_to_pushover(message):
         }
     )
 
+
 # --- Chatbot Class ---
 class RaabiyahChatbot:
-
     def __init__(self):
         self.openai = OpenAI()
         self.name = "Raabiyah Adam"
@@ -77,15 +88,22 @@ class RaabiyahChatbot:
     def system_prompt(self):
         return f"""
 You are acting as {self.name}'s assistant on her personal site.
-Your job is to answer questions about her background, experience, skills, and projects.
-Be warm, insightful, and guide interested visitors to share their name and email for follow-up.
+Your job is to answer questions about her background, experience, skills, education, and projects.
+Be warm, professional, and helpful. Guide interested visitors to share their name and email for follow-up.
+
+When answering questions about Raabiyah’s current situation, use the most up-to-date information available.
+Do not describe past roles as current unless the source clearly says they are current.
+If referring to Azakaw, describe it as her most recent role unless clearly stated otherwise.
+Mention that she is currently pursuing an MSc in Applied Data Science & AI at OPIT when relevant.
 
 If a visitor asks whether Raabiyah has used a particular tool, platform, or skill that is not explicitly mentioned in her summary or LinkedIn profile, you should:
-- Acknowledge that it may not be listed
-- Emphasize that Raabiyah is an extremely fast and capable learner
-- Reassure the user that she is fully confident in picking up any tool or process required to succeed
+- acknowledge that it may not be listed
+- emphasize that Raabiyah is a fast and capable learner
+- reassure the user that she is confident in picking up any tool or process required to succeed
 
-Never say "no" outright — always frame it positively in terms of her adaptability, eagerness to learn, and proven ability to pick up new technologies.
+Never say "no" outright. Frame the answer positively in terms of adaptability, curiosity, and proven ability to learn quickly.
+
+Keep answers concise, natural, and confident. Avoid sounding generic or overhyped.
 
 ## Summary:
 {self.summary}
@@ -94,35 +112,39 @@ Never say "no" outright — always frame it positively in terms of her adaptabil
 {self.linkedin}
 """
 
-
     def respond(self, user_input):
         log_to_pushover(f"Visitor sent a message: {user_input[:100]}")
 
         messages = [{"role": "system", "content": self.system_prompt()}]
+
         for q, a in self.history_pairs:
             messages.append({"role": "user", "content": q})
             messages.append({"role": "assistant", "content": a})
+
         messages.append({"role": "user", "content": user_input})
 
         response = self.openai.chat.completions.create(
-            model="gpt-4o-mini", messages=messages
+            model="gpt-4o-mini",
+            messages=messages
         )
+
         reply = response.choices[0].message.content
         self.history_pairs.append((user_input, reply))
         return reply
 
 
-
 # --- Streamlit App ---
 st.set_page_config(page_title="Raabiyah's Career Assistant", layout="centered")
+
 st.title("🌟 Chat with Raabiyah’s Assistant")
 st.markdown("___")
-
 st.subheader("Talk to Raabiyah’s Assistant")
+
 if "chatbot" not in st.session_state:
     st.session_state.chatbot = RaabiyahChatbot()
 
 user_input = st.text_input("Ask a question about Raabiyah...", key="input")
+
 if user_input:
     reply = st.session_state.chatbot.respond(user_input)
     st.write(f"**Raabiyah's Assistant:** {reply}")
@@ -135,6 +157,7 @@ if len(st.session_state.chatbot.history_pairs) > 0:
 
 st.markdown("---")
 st.subheader("📬 Share your email to receive Raabiyah’s CV")
+
 name = st.text_input("Your name")
 email = st.text_input("Your email")
 

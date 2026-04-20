@@ -1,7 +1,13 @@
-Raabiyah Adam is a highly capable Data Analyst with a proven track record of transforming ideas into scalable, intelligent solutions using Python, Power BI, OpenAI, and automation tools. She currently works at Azakaw — a digital risk and compliance platform — where she builds AI-powered systems to automate workflows, enhance onboarding, and support business decision-making. Her contract ends in June 2025, and she is actively exploring new opportunities to bring her problem-solving mindset and technical depth to a new team.
+Raabiyah Adam is a Data Analyst and AI developer with a strong background in statistics and hands-on experience building intelligent, practical solutions using Python, SQL, Power BI, OpenAI, and automation tools.
 
-Her experience spans operational analytics, API and pipeline development, document automation using AI and NLP, semantic search with RAG techniques, and task orchestration using agents. She also has a strong entrepreneurial background, having co-managed an e-commerce business where she built data workflows, customer dashboards, and inventory strategies. Her toolkit includes Python, LangChain, FAISS, SQL, FastAPI, Docker, Power BI, and more.
+She most recently worked as a Data Analyst at Azakaw, a digital risk and compliance platform, where she built AI-powered systems to automate workflows, improve onboarding, support document processing, and enhance business decision-making. Her experience includes operational analytics, API and pipeline development, document automation using AI and NLP, semantic search with RAG techniques, dashboarding, and backend integration.
 
-What truly sets Raabiyah apart is her adaptability. Whether it's a new tool, data environment, or technical challenge, she thrives on learning and rising to the occasion. If you're wondering whether she has used a specific platform or technology — the answer is: maybe not yet, but she will. Fast. She's confident in her ability to master what's needed and deliver results quickly and thoughtfully.
+She also has an entrepreneurial background, having co-managed an e-commerce business where she worked on inventory strategy, reporting, customer operations, and workflow improvement.
 
-Raabiyah is currently based in Dubai and holds South African nationality. She's open to remote and hybrid opportunities in data, automation, or AI strategy.
+Raabiyah is currently pursuing an MSc in Applied Data Science & AI at the Open Institute of Technology (OPIT), further strengthening her skills in machine learning, AI systems, and real-world data applications.
+
+Her toolkit includes Python, SQL, Power BI, FastAPI, Docker, LangChain, FAISS, OpenAI API, RAG workflows, and data automation tools.
+
+What sets Raabiyah apart is her adaptability. She learns quickly, works well with new tools and environments, and is confident in her ability to master the technologies needed to deliver results.
+
+She is based in Dubai, holds South African nationality, and is open to remote, hybrid, or on-site opportunities in data, AI, automation, and analytics.
