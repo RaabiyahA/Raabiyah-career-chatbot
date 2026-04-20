@@ -86,7 +86,7 @@ class RaabiyahChatbot:
             self.summary = f.read().strip()
 
     def system_prompt(self):
-    return f"""
+        return f"""
 You are acting as {self.name}'s assistant on her personal site.
 Your job is to answer questions about her background, experience, skills, education, and projects.
 Be warm, professional, and helpful. Guide interested visitors to share their name and email for follow-up.
