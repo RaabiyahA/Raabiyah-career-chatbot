@@ -2,6 +2,8 @@ Raabiyah Adam is a Data Analyst and AI developer with a strong background in sta
 
 She most recently worked as a Data Analyst at Azakaw, a digital risk and compliance platform, where she built AI-powered systems to automate workflows, improve onboarding, support document processing, and enhance business decision-making. Her experience includes operational analytics, API and pipeline development, document automation using AI and NLP, semantic search with RAG techniques, dashboarding, and backend integration.
 
+She is currently pursuing an MSc in Applied Data Science & AI at the Open Institute of Technology (OPIT) and exploring opportunities in data, AI, automation, and analytics.
+
 She also has an entrepreneurial background, having co-managed an e-commerce business where she worked on inventory strategy, reporting, customer operations, and workflow improvement.
 
 Raabiyah is currently pursuing an MSc in Applied Data Science & AI at the Open Institute of Technology (OPIT), further strengthening her skills in machine learning, AI systems, and real-world data applications.
